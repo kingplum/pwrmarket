@@ -45,11 +45,11 @@ export default function RootLayout({
               </div>
           </div>
         </header>
-        <div className="container d-flex flex-wrap">
+        <div className="container">
           {children}
         </div>
         <footer>
-        <div className="container d-flex flex-wrap">
+        <div className="container">
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 py-5">
             <div className="col d-flex align-items-start">
               <div>
