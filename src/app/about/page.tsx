@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   description: 'Everything you need right around the corner',
 }
 
-export default function Home() {
+export default function About() {
   return (
-    <h1>Home page</h1>
+    <h1>About page</h1>
   )
 }

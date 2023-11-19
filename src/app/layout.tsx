@@ -17,7 +17,7 @@ export default function RootLayout({
           <nav className="py-2 bg-light border-bottom">
             <div className="container d-flex flex-wrap">
               <ul className="nav me-auto">
-                <li className="nav-item"><Link href="#" className="nav-link link-dark px-2 active" aria-current="page">Find a Localtion</Link></li>
+                <li className="nav-item"><Link href="/locations" className="nav-link link-dark px-0 active" aria-current="page">Find a Localtion</Link></li>
               </ul>
               <ul className="nav">
                 <li className="nav-item"><Link href="#" className="nav-link link-dark px-2">Facebook</Link></li>
@@ -36,7 +36,7 @@ export default function RootLayout({
                 <li><Link href="/rewards" className="nav-link px-2 link-dark">Rewards</Link></li>
                 <li><Link href="#" className="nav-link px-2 link-dark">Careers</Link></li>
                 <li><Link href="#" className="nav-link px-2 link-dark">Contact</Link></li>
-                <li><Link href="#" className="nav-link px-2 link-dark">About</Link></li>
+                <li><Link href="/about" className="nav-link px-2 link-dark">About</Link></li>
                 <li><Link href="#" className="nav-link px-2 link-dark">Carwash</Link></li>
                 <li><Link href="#" className="nav-link px-2 link-dark">Papa Sal's</Link></li>
               </ul>
