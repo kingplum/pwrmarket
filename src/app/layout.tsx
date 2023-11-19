@@ -15,7 +15,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
           <nav className="py-2 bg-light border-bottom">
-            <div className="container d-flex flex-wrap">
+            <div className="container-fluid d-flex flex-wrap">
               <ul className="nav me-auto">
                 <li className="nav-item"><Link href="/locations" className="nav-link link-dark px-0 active" aria-current="page">Find a Localtion</Link></li>
               </ul>
@@ -26,7 +26,7 @@ export default function RootLayout({
             </div>
           </nav>
           <header className="py-3 mb-4 border-bottom">
-          <div className="container d-flex flex-wrap justify-content-center">
+          <div className="container-fluid d-flex flex-wrap justify-content-center">
             <Link href="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
                 <span className="fs-4">Logo</span>
               </Link>
@@ -45,11 +45,11 @@ export default function RootLayout({
               </div>
           </div>
         </header>
-        <div className="container">
+        <div className="container-fluid">
           {children}
         </div>
         <footer>
-        <div className="container">
+        <div className="container-fluid">
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 py-5">
             <div className="col d-flex align-items-start">
               <div>

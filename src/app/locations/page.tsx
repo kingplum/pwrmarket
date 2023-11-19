@@ -21,11 +21,19 @@ import "../maps.css";
 // }
 
 export default function Locations() {
-  const [lat, setLat] = useState(27.672932021393862);
-  const [lng, setLng] = useState(85.31184012689732);
+  const [lat, setLat] = useState(33.8522875);
+  const [lng, setLng] = useState(-118.4379945);
 
   const libraries = useMemo(() => ['places'], []);
   const mapCenter = useMemo(() => ({ lat: lat, lng: lng }), [lat, lng]);
+  const vitris = [
+    {title: "PM #2052", lat: 33.9992401, lng: -117.6650872, order: 1},
+    {title: "PM GO #2017", lat: 34.0773157, lng: -117.6926479, order: 2},
+    {title: "PM GO #2037", lat: 33.5259669, lng: -117.7142425, order: 3},
+    {title: "PM GO #1033", lat: 33.8396226, lng: -117.8895408, order: 4},
+    {title: "PM GO #2036", lat: 33.603619, lng: -117.8754979, order: 5},
+    {title: "PM GO #2003", lat: 33.8242905, lng: -118.0304123, order: 6},
+  ];
 
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
@@ -46,48 +54,36 @@ export default function Locations() {
   }
 
   return (
-    <div class="row">
-       <div class="col-md-5 col-lg-4">
+    <div className="row">
+       <div className="col-md-5 col-lg-4">
         {/* render Places Auto Complete and pass custom handler which updates the state */}
         <PlacesAutocomplete
           onAddressSelect={(address) => {
             getGeocode({ address: address }).then((results) => {
               const { lat, lng } = getLatLng(results[0]);
-
               setLat(lat);
               setLng(lng);
             });
           }}
         />
       </div>
-      <div class="col-md-7 col-lg-8">
+      <div className="col-md-7 col-lg-8">
         <GoogleMap
           options={mapOptions}
-          zoom={14}
+          zoom={8}
           center={mapCenter}
           mapTypeId={google.maps.MapTypeId.ROADMAP}
-          mapContainerStyle={{ width: '100%', height: '100%' }}
+          mapContainerStyle={{ width: '100%', height: '700px' }}
           onLoad={(map) => console.log('Map Loaded')}
         >
-          <MarkerF
-            position={mapCenter}
-            onLoad={() => console.log('Marker Loaded')}
-          />
-
-          {[1000, 2500].map((radius, idx) => {
+          {vitris.map(vitri => {
             return (
-              <CircleF
-                key={idx}
-                center={mapCenter}
-                radius={radius}
-                onLoad={() => console.log('Circle Load...')}
-                options={{
-                  fillColor: radius > 1000 ? 'red' : 'green',
-                  strokeColor: radius > 1000 ? 'red' : 'green',
-                  strokeOpacity: 0.8,
-                }}
+              <MarkerF
+                position={{ lat: vitri.lat, lng: vitri.lng}}
+                title={vitri.title}
+                onLoad={() => console.log('Marker Loaded')}
               />
-            );
+            )
           })}
         </GoogleMap>
       </div>
@@ -137,12 +133,23 @@ const PlacesAutocomplete = ({
 
   return (
     <div className="autocompleteWrapper">
+      <fieldset>
+        <legend className="heading_root__nUUce heading_h4__J17Nl">Find a PWRmarket Near You</legend>
+        <div className="flex gap-5 pb-3 pt-4">
+        <label className="flex cursor-pointer gap-2 text-size-4 font-bold leading-6">
+          <input type="radio" name="searchMode" className="h-6 w-6 cursor-pointer accent-brand-red" value="location" checked /><span className="sr-only">Search </span>By Location
+        </label>
+        <label className="flex cursor-pointer gap-2 text-size-4 font-bold leading-6">
+          <input type="radio" name="searchMode" className="h-6 w-6 cursor-pointer accent-brand-red" value="storeId" /><span className="sr-only">Search </span>By Store #
+        </label>
+        </div>
+      </fieldset>
       <input
         value={value}
         className="autocompleteInput"
         disabled={!ready}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="123 Stariway To Heaven"
+        placeholder="Enter an address, city, or zip code."
       />
 
       {status === 'OK' && (
