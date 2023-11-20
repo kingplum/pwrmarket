@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Inter } from 'next/font/google'
+import { Asap } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.css';
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const asap = Asap({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={asap.className}>
           <nav className="py-2 bg-light border-bottom">
             <div className="container-fluid d-flex flex-wrap">
               <ul className="nav me-auto">
@@ -35,7 +35,7 @@ export default function RootLayout({
                           s-3.023,6.741-6.741,6.741S43.731,35.387,43.731,31.67z"/>
                       </g>
                     </svg>
-                    <span>Find a store</span>
+                    <span>Find a location</span>
                   </Link>
                 </li>
               </ul>
@@ -61,28 +61,28 @@ export default function RootLayout({
               </ul>
             </div>
           </nav>
-          <header className="py-3 mb-4 border-bottom">
+          <header className="py-4 mb-4 border-bottom">
           <div className="container-fluid d-flex flex-wrap justify-content-center align-items-center">
             <Link href="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
                 <span className="fs-4 se-img logo"></span>
                 <span className="fs-4 se-img full-logo"></span>
             </Link>
               <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><Link href="/" className="nav-link px-2 link-secondary">Home</Link></li>
-                <li><Link href="#" className="nav-link px-2 link-dark">Deals</Link></li>
-                <li><Link href="/rewards" className="nav-link px-2 link-dark">Rewards</Link></li>
-                <li><Link href="#" className="nav-link px-2 link-dark">Careers</Link></li>
-                <li><Link href="#" className="nav-link px-2 link-dark">Contact</Link></li>
-                <li><Link href="/about" className="nav-link px-2 link-dark">About</Link></li>
-                <li><Link href="#" className="nav-link px-2 link-dark">Carwash</Link></li>
-                <li><Link href="#" className="nav-link px-2 link-dark">Papa Sal's</Link></li>
+                <li><Link href="/" className="nav-link px-3 link-secondary">Home</Link></li>
+                <li><Link href="#" className="nav-link px-3 link-dark">Deals</Link></li>
+                <li><Link href="/rewards" className="nav-link px-3 link-dark">Rewards</Link></li>
+                <li><Link href="#" className="nav-link px-3 link-dark">Careers</Link></li>
+                <li><Link href="#" className="nav-link px-3 link-dark">Contact</Link></li>
+                <li><Link href="#" className="nav-link px-3 link-dark">About</Link></li>
+                <li><Link href="#" className="nav-link px-3 link-dark">Carwash</Link></li>
+                <li><Link href="#" className="nav-link px-3 link-dark">Papa Sal's</Link></li>
               </ul>
               <div className="text-end">
-                <button type="button" className="nav-link btn">Download App</button>
+                <button type="button" className="btn btn-primary">Download App</button>
               </div>
           </div>
         </header>
-        <div className="">
+        <div className="container-fluid">
           {children}
         </div>
         <footer className='footer-img'>
@@ -93,21 +93,21 @@ export default function RootLayout({
                   <h4 className="fw-bold mb-0 title">Info</h4>
                   <div className='pt-3 pb-3'>
                     <div>
-                      <h4 className='text-white subtitle fw-bold'>Address</h4>
+                      <h4 className='text-white subtitle'>Address</h4>
                       <a href="" className="sie-footer se text-decoration-none">
                         <h4 className="se-t sie-footer-text st-m-heading st-d-heading">2860 N. Santiago Blvd, Orange, CA 92867</h4>
                       </a>
                     </div>
 
                     <div>
-                      <h4 className='text-white subtitle fw-bold'>Call Us 24/7</h4>
+                      <h4 className='text-white subtitle'>Call Us 24/7</h4>
                       <a href="" className="sie-footer se text-decoration-none">
                         <h4 className="se-t sie-footer-text st-m-heading st-d-heading">(714) 761-5426</h4>
                       </a>
                     </div>
 
                     <div>
-                      <h4 className='text-white subtitle fw-bold'>Email</h4>
+                      <h4 className='text-white subtitle'>Email</h4>
                       <a href="" className="sie-footer_8 se text-decoration-none">
                         <h4 className="se-t sie-footer_8-text st-m-heading st-d-heading">customerservice@hnsenergy.com</h4>
                       </a>
@@ -165,7 +165,7 @@ export default function RootLayout({
 
               <div>
                   <h4 className="fw-bold mb-0 title">Check Us Out</h4>
-                  <div className='pt-3 pb-3'>
+                  <div className='pt-3 pb-3 foot-menu'>
                     <a href="" className="sie-footer se text-decoration-none">
                       <h4 className="se-t sie-footer-text st-m-heading st-d-heading">Home</h4>
                     </a>
