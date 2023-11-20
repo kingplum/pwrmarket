@@ -61,7 +61,7 @@ export default function RootLayout({
               </ul>
             </div>
           </nav>
-          <header className="py-4 mb-4 border-bottom">
+          <header className="py-4 border-bottom">
           <div className="container-fluid d-flex flex-wrap justify-content-center align-items-center">
             <Link href="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
                 <span className="fs-4 se-img logo"></span>

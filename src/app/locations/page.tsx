@@ -66,7 +66,7 @@ export default function Locations() {
           }}
         />
       </div>
-      <div className="col-md-7 col-lg-8">
+      <div className="col-md-7 col-lg-8 pe-0">
         <GoogleMap
           options={mapOptions}
           zoom={8}
@@ -134,8 +134,8 @@ const PlacesAutocomplete = ({
   return (
     <div className="autocompleteWrapper">
       <fieldset>
-        <legend className="heading_root__nUUce heading_h4__J17Nl">Find a PWRmarket Near You</legend>
-        <div className="flex gap-5 pb-3 pt-4">
+        <legend className="pt-4">Find a PWRmarket Near You</legend>
+        <div className="flex gap-5 pb-3">
         <label className="flex cursor-pointer gap-2 text-size-4 font-bold leading-6">
           <input type="radio" name="searchMode" className="h-6 w-6 cursor-pointer accent-brand-red" value="location" checked /><span className="sr-only">Search </span>By Location
         </label>
