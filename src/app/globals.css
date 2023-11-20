@@ -93,7 +93,7 @@ footer a h4 {
 .subtitle{
   font-size: 1rem;
   line-height: 1.5rem;
-  color: #c6d5db;
+  color: #c6d5db !important;
 }
 
 .foot-menu a {
