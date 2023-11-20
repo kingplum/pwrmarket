@@ -68,14 +68,14 @@ export default function RootLayout({
                 <span className="fs-4 se-img full-logo"></span>
             </Link>
               <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><Link href="/" className="nav-link px-2">Home</Link></li>
-                <li><Link href="#" className="nav-link px-2">Deals</Link></li>
-                <li><Link href="/rewards" className="nav-link px-2">Rewards</Link></li>
-                <li><Link href="#" className="nav-link px-2">Careers</Link></li>
-                <li><Link href="#" className="nav-link px-2">Contact</Link></li>
-                <li><Link href="/about" className="nav-link px-2">About</Link></li>
-                <li><Link href="#" className="nav-link px-2">Carwash</Link></li>
-                <li><Link href="#" className="nav-link px-2">Papa Sal's</Link></li>
+                <li><Link href="/" className="nav-link px-2 link-secondary">Home</Link></li>
+                <li><Link href="#" className="nav-link px-2 link-dark">Deals</Link></li>
+                <li><Link href="/rewards" className="nav-link px-2 link-dark">Rewards</Link></li>
+                <li><Link href="#" className="nav-link px-2 link-dark">Careers</Link></li>
+                <li><Link href="#" className="nav-link px-2 link-dark">Contact</Link></li>
+                <li><Link href="/about" className="nav-link px-2 link-dark">About</Link></li>
+                <li><Link href="#" className="nav-link px-2 link-dark">Carwash</Link></li>
+                <li><Link href="#" className="nav-link px-2 link-dark">Papa Sal's</Link></li>
               </ul>
               <div className="text-end">
                 <button type="button" className="nav-link btn">Download App</button>

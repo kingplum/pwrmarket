@@ -27,12 +27,12 @@ export default function Locations() {
   const libraries = useMemo(() => ['places'], []);
   const mapCenter = useMemo(() => ({ lat: lat, lng: lng }), [lat, lng]);
   const vitris = [
-    {title: "PM #2052", lat: 33.9992401, lng: -117.6650872, order: 1},
-    {title: "PM GO #2017", lat: 34.0773157, lng: -117.6926479, order: 2},
-    {title: "PM GO #2037", lat: 33.5259669, lng: -117.7142425, order: 3},
-    {title: "PM GO #1033", lat: 33.8396226, lng: -117.8895408, order: 4},
-    {title: "PM GO #2036", lat: 33.603619, lng: -117.8754979, order: 5},
-    {title: "PM GO #2003", lat: 33.8242905, lng: -118.0304123, order: 6},
+    {id: 1, title: "PM #2052", lat: 33.9992401, lng: -117.6650872},
+    {id: 2, title: "PM GO #2017", lat: 34.0773157, lng: -117.6926479},
+    {id: 3, title: "PM GO #2037", lat: 33.5259669, lng: -117.7142425},
+    {id: 4, title: "PM GO #1033", lat: 33.8396226, lng: -117.8895408},
+    {id: 5, title: "PM GO #2036", lat: 33.603619, lng: -117.8754979},
+    {id: 6, title: "PM GO #2003", lat: 33.8242905, lng: -118.0304123},
   ];
 
   const mapOptions = useMemo<google.maps.MapOptions>(
@@ -45,7 +45,7 @@ export default function Locations() {
   );
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCyBQF87ZvsJgklNX4WQ4OSKuvSIlOlVMQ",
+    googleMapsApiKey: "AIzaSyAO7OB-Z0YCJG5KoUK2UfTzUcswbyq22TY",
     libraries: libraries as any,
   });
 
@@ -79,6 +79,7 @@ export default function Locations() {
           {vitris.map(vitri => {
             return (
               <MarkerF
+                key={vitri.id}
                 position={{ lat: vitri.lat, lng: vitri.lng}}
                 title={vitri.title}
                 onLoad={() => console.log('Marker Loaded')}
