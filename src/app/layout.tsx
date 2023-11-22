@@ -1,8 +1,11 @@
+"use client"
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Asap } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.css'
 import './globals.css'
+import { UserLocationContext } from './context/UserLocationContext'
+import { useEffect, useState } from 'react'
 
 const asap = Asap({ subsets: ['latin'] })
 
@@ -11,9 +14,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const [userLocation,setUserLocation]=useState({});
+  useEffect(()=>{
+    getUserLocation();
+  },[])
+  const getUserLocation=()=>{
+    navigator.geolocation.getCurrentPosition(function(pos){
+      console.log(pos)
+      setUserLocation({
+        lat:pos.coords.latitude,
+        lng:pos.coords.longitude
+      })
+    })
+  }
   return (
     <html lang="en">
-      <body className={asap.className}>
+      <body className={asap.className} id="body">
           <nav className="py-2 bg-light border-bottom">
             <div className="container-fluid d-flex flex-wrap">
               <ul className="nav me-auto">
@@ -83,7 +99,9 @@ export default function RootLayout({
           </div>
         </header>
         <div className="container-fluid">
-          {children}
+          <UserLocationContext.Provider value={{userLocation,setUserLocation}}>
+           {children}
+          </UserLocationContext.Provider>
         </div>
         <footer className='footer-img'>
         <div className="container-fluid">
