@@ -2,13 +2,6 @@
 "use client"
 import type { Metadata } from 'next';
 import Header from "./../Components/Header"
-import { Banner } from "../../Components/Banner"
-import Menu from "./../Components/OutMenu"
-import Buy from "./../Components/Buy"
-import Deals from "./../Components/Deals"
-import Reward from "./../Components/Reward"
-import Download from "./../Components/Download"
-import Career from "./../Components/Career"
 import Footer from "./../Components/Footer"
 import {
   useLoadScript,
@@ -25,14 +18,9 @@ import "../maps.css";
 import Data from './Data'
 import { useGlobalContext } from '../context/UserLocationContext';
 
-// export const metadata: Metadata = {
-//   title: 'Find A Locations | Power Market',
-//   description: 'Everything you need right around the corner',
-// }
-
 export default function Locations() {
-  const [lat, setLat] = useState(16.021205);
-  const [lng, setLng] = useState(108.229936);
+  const [lat, setLat] = useState(39.76475998462829);
+  const [lng, setLng] = useState(-101.18953488679679);
   const [locationList,setLocationList]=useState(Data.CategoryListData)
   const [selection, setSelection] = useState({});
   const [map,setMap]=useState<any | null>(null);
@@ -123,40 +111,46 @@ export default function Locations() {
     }
 
   return (
-    <div className="row">
-       <div className="col-md-5 col-lg-4">
-        {/* render Places Auto Complete and pass custom handler which updates the state */}
-        <PlacesAutocomplete
-          onAddressSelect={(address) => {
-            getGeocode({ address: address }).then((results) => {
-              const { lat, lng } = getLatLng(results[0]);
-              setLat(lat);
-              setLng(lng);
-            });
-          }}
-        />
+    <div className="w-screen h-screen overflow-x-hidden overflow-y-auto">
+      <Header />
+      <div className="w-full mt-[120px] flex justify-center">
+        <div className="w-[40%] max-lg:w-[40%] px-4">
+          {/* render Places Auto Complete and pass custom handler which updates the state */}
+          <PlacesAutocomplete
+            onAddressSelect={(address) => {
+              getGeocode({ address: address }).then((results) => {
+                const { lat, lng } = getLatLng(results[0]);
+                setLat(lat);
+                setLng(lng);
+              });
+            }}
+          />
+        </div>
+        <div className="w-[60%] max-lg:w-[60%]">
+          <GoogleMap
+            options={mapOptions}
+            zoom={10}
+            center={mapCenter}
+            mapTypeId={google.maps.MapTypeId.ROADMAP}
+            mapContainerStyle={{ width: '100%', height: '100%' }}
+            onLoad={map=>setMap(map)}
+          >
+            {locationList.features.map((vitri,index) => {
+              return (
+                <MarkerF
+                  key={index}
+                  position={{lat: vitri.lat as number, lng: vitri.lng as number}}
+                  title={vitri.properties.address}
+                  //onLoad={map=>setMap(map)}
+                  onClick={()=>{setSelection(vitri), scrollFunction(index)}}
+                  icon=''
+                />
+              )
+            })}
+          </GoogleMap>
+        </div>
       </div>
-      <div className="col-md-7 col-lg-8 pe-0">
-        <GoogleMap
-          options={mapOptions}
-          zoom={8}
-          center={mapCenter}
-          mapTypeId={google.maps.MapTypeId.ROADMAP}
-          mapContainerStyle={{ width: '100%', height: '700px' }}
-          onLoad={(map) => console.log('Map Loaded')}
-        >
-          {vitris.map(vitri => {
-            return (
-              <MarkerF
-                key={vitri.id}
-                position={{ lat: vitri.lat, lng: vitri.lng}}
-                title={vitri.title}
-                onLoad={() => console.log('Marker Loaded')}
-              />
-            )
-          })}
-        </GoogleMap>
-      </div>
+      <Footer />
     </div>
   );
 };
@@ -264,7 +258,7 @@ const PlacesAutocomplete = ({
   return (
     <div className="autocompleteWrapper">
       <fieldset>
-        <legend className="py-5">Find a PWRmarket Near You</legend>
+        <legend className="py-4">Find a PWRmarket Near You</legend>
         <div className="flex gap-5 pb-3">
         <label className="flex cursor-pointer gap-2 text-size-4 font-bold leading-6">
           <input type="radio" name="searchMode" className="h-6 w-6 cursor-pointer accent-brand-red" value="location" checked={radioSearch === "location"}
@@ -297,10 +291,10 @@ const PlacesAutocomplete = ({
               <a>
                 <div className='store-list-card_root' id={'store-list-card_root-'+index}>
                   <div className='store-list-card_content'>
+                    {item.properties.storeId}<br></br>
                     {item.properties.address}<br></br>
                     {item.properties.city}<br></br>
-                    Store#{item.properties.storeId}<br></br>
-                    Dis: {distance[index]} Km
+                    {distance[index]} Km
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 12" className="store-list-card_icon"><path d="M1.29.71a.996.996 0 0 0 0 1.41L5.17 6 1.29 9.88a.996.996 0 1 0 1.41 1.41L7.29 6.7a.996.996 0 0 0 0-1.41L2.7.7C2.32.32 1.68.32 1.29.71Z"></path></svg>
                 </div>

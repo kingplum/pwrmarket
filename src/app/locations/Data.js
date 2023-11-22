@@ -3,132 +3,118 @@ const CategoryListData = {
     'features': [
       {
         'type': 'Feature',
-        'lat': 16.003044,
-        'lng': 108.254687,
+        'lat': 33.9979233,
+        'lng': -117.6538057,
         'geometry': {
           'type': 'Point'
         },
         'properties': {
-          'phoneFormatted': '(202) 234-7336',
+          'phoneFormatted': '(202) 123 456',
           'phone': '2022347336',
-          'address': '1471 P St NW',
-          'city': 'Washington DC',
+          'address': '14088 Euclid Ave',
+          'city': 'Chino',
           'country': 'United States',
-          'crossStreet': 'at 15th St NW',
-          'postalCode': '20005',
-          'state': 'D.C.',
-          'storeId': '9874'
+          'crossStreet': '14088 Euclid Ave',
+          'postalCode': '91710',
+          'state': 'C.A.',
+          'storeId': 'PM #2052'
         }
       },
       {
         'type': 'Feature',
-        'lat': 15.962728,
-        'lng': 107.853492,
+        'lat': 34.0773157,
+        'lng': -117.6926479,
         'geometry': {
           'type': 'Point'
         },
         'properties': {
-          'phoneFormatted': '(202) 507-8357',
-          'phone': '2025078357',
-          'address': '2221 I St NW',
-          'city': 'Washington DC',
-          'country': 'United States',
-          'crossStreet': 'at 22nd St NW',
-          'postalCode': '20037',
-          'state': 'D.C.',
-          'storeId': '9875'
-        }
-      },{
-        'type': 'Feature',
-        'lat': 15.904877,
-        'lng': 108.313013,
-        'geometry': {
-          'type': 'Point'
-        },
-        'properties': {
-          'phoneFormatted': '(202) 234-7336',
+          'phoneFormatted': '(202) 123 456',
           'phone': '2022347336',
-          'address': '1471 P St NW',
-          'city': 'Washington DC',
+          'address': '9700 Central Ave',
+          'city': 'Montclair',
           'country': 'United States',
-          'crossStreet': 'at 15th St NW',
-          'postalCode': '20005',
-          'state': 'D.C.',
-          'storeId': '9874'
+          'crossStreet': '9700 Central Ave',
+          'postalCode': '91763',
+          'state': 'C.A.',
+          'storeId': 'PM Go #2052'
         }
-      },{
+      },
+      {
         'type': 'Feature',
-        'lat': 15.805541,
-        'lng': 15.805541,
+        'lat': 33.5259669,
+        'lng': 117.7142425,
         'geometry': {
           'type': 'Point'
         },
         'properties': {
-          'phoneFormatted': '(202) 234-7336',
+          'phoneFormatted': '(202) 123 456',
           'phone': '2022347336',
-          'address': '1471 P St NW',
-          'city': 'Washington DC',
+          'address': '30072 Crown Valley Pkwy',
+          'city': 'Laguna Niguel',
           'country': 'United States',
-          'crossStreet': 'at 15th St NW',
-          'postalCode': '20005',
-          'state': 'D.C.',
-          'storeId': '9874'
+          'crossStreet': '30072 Crown Valley Pkwy',
+          'postalCode': '92677',
+          'state': 'C.A.',
+          'storeId': 'PM GO #2037'
         }
-      },{
+      },
+      {
         'type': 'Feature',
-        'lat': 16.728566,
-        'lng': 107.094904,
+        'lat': 33.8396226,
+        'lng': -117.8921157,
         'geometry': {
           'type': 'Point'
         },
         'properties': {
-          'phoneFormatted': '(202) 234-7336',
+          'phoneFormatted': '(202) 123 456',
           'phone': '2022347336',
-          'address': '1471 P St NW',
-          'city': 'Washington DC',
+          'address': '201 S State College Blvd',
+          'city': 'Anaheim',
           'country': 'United States',
-          'crossStreet': 'at 15th St NW',
-          'postalCode': '20005',
-          'state': 'D.C.',
-          'storeId': '9874'
+          'crossStreet': '201 S State College Blvd',
+          'postalCode': '92806',
+          'state': 'C.A.',
+          'storeId': 'PM GO #1033'
         }
-      },{
+      },
+      {
         'type': 'Feature',
-        'lat': 14.917132,
-        'lng': 108.103622,
+        'lat': 33.603619,
+        'lng': -117.8754979,
         'geometry': {
           'type': 'Point'
         },
         'properties': {
-          'phoneFormatted': '(202) 234-7336',
+          'phoneFormatted': '(202) 123 456',
           'phone': '2022347336',
-          'address': '1471 P St NW',
-          'city': 'Washington DC',
+          'address': '2546 East Coast Hwy',
+          'city': 'Corona Del Mar',
           'country': 'United States',
-          'crossStreet': 'at 15th St NW',
-          'postalCode': '20005',
-          'state': 'D.C.',
-          'storeId': '9874'
+          'crossStreet': '2546 East Coast Hwy',
+          'postalCode': '92625',
+          'state': 'C.A.',
+          'storeId': 'PM GO #2036'
         }
-      },{
+      },
+      {
         'type': 'Feature',
-        'lat': 15.283186,
-        'lng': 107.155758,
+        'lat': 33.8242905,
+        'lng': -118.0304123,
         'geometry': {
           'type': 'Point'
         },
         'properties': {
-          'phoneFormatted': '(202) 234-7336',
+          'phoneFormatted': '(202) 123 456',
           'phone': '2022347336',
-          'address': '1471 P St NW',
-          'city': 'Washington DC',
+          'address': '9500 Valley View St',
+          'city': 'Cypress',
           'country': 'United States',
-          'crossStreet': 'at 15th St NW',
-          'postalCode': '20005',
-          'state': 'D.C.',
-          'storeId': '9874'
+          'crossStreet': '9500 Valley View St',
+          'postalCode': '90630',
+          'state': 'C.A.',
+          'storeId': 'PM GO #2003'
         }
-      }
+      },
     ]
   }
 
