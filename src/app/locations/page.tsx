@@ -1,6 +1,15 @@
 
 "use client"
 import type { Metadata } from 'next';
+import Header from "./../Components/Header"
+import { Banner } from "../../Components/Banner"
+import Menu from "./../Components/OutMenu"
+import Buy from "./../Components/Buy"
+import Deals from "./../Components/Deals"
+import Reward from "./../Components/Reward"
+import Download from "./../Components/Download"
+import Career from "./../Components/Career"
+import Footer from "./../Components/Footer"
 import {
   useLoadScript,
   GoogleMap,
@@ -44,7 +53,7 @@ export default function Locations() {
   );
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAO7OB-Z0YCJG5KoUK2UfTzUcswbyq22TY",
+    googleMapsApiKey: "AIzaSyCyBQF87ZvsJgklNX4WQ4OSKuvSIlOlVMQ",
     libraries: libraries as any,
   });
 
@@ -53,40 +62,44 @@ export default function Locations() {
   }
 
   return (
-    <div className="row">
-       <div className="col-md-5 col-lg-4">
-        {/* render Places Auto Complete and pass custom handler which updates the state */}
-        <PlacesAutocomplete
-          onAddressSelect={(address) => {
-            getGeocode({ address: address }).then((results) => {
-              const { lat, lng } = getLatLng(results[0]);
-              setLat(lat);
-              setLng(lng);
-            });
-          }}
-        />
+    <div className="w-screen h-screen overflow-x-hidden overflow-y-auto">
+      <Header />
+      <div className="w-full h-[500px] max-md:h-[264px] relative overflow-hidden mt-[120px] flex justify-center">
+        <div className="w-[50%] h-full max-lg:w-[40%] px-[20px] flex items-center max-md:w-full">
+          {/* render Places Auto Complete and pass custom handler which updates the state */}
+          <PlacesAutocomplete
+              onAddressSelect={(address) => {
+              getGeocode({ address: address }).then((results) => {
+                const { lat, lng } = getLatLng(results[0]);
+                setLat(lat);
+                setLng(lng);
+              });
+            }}
+          />
+        </div>  
+        <div className="w-[50%] h-full max-lg:w-[60%] flex items-center max-md:w-full">
+          <GoogleMap
+            options={mapOptions}
+            zoom={8}
+            center={mapCenter}
+            mapTypeId={google.maps.MapTypeId.ROADMAP}
+            mapContainerStyle={{ width: '100%', height: '700px' }}
+            onLoad={(map) => console.log('Map Loaded')}
+          >
+            {vitris.map(vitri => {
+              return (
+                <MarkerF
+                  key={vitri.id}
+                  position={{ lat: vitri.lat, lng: vitri.lng}}
+                  title={vitri.title}
+                  onLoad={() => console.log('Marker Loaded')}
+                />
+              )
+            })}
+          </GoogleMap>
+        </div>
       </div>
-      <div className="col-md-7 col-lg-8 pe-0">
-        <GoogleMap
-          options={mapOptions}
-          zoom={8}
-          center={mapCenter}
-          mapTypeId={google.maps.MapTypeId.ROADMAP}
-          mapContainerStyle={{ width: '100%', height: '700px' }}
-          onLoad={(map) => console.log('Map Loaded')}
-        >
-          {vitris.map(vitri => {
-            return (
-              <MarkerF
-                key={vitri.id}
-                position={{ lat: vitri.lat, lng: vitri.lng}}
-                title={vitri.title}
-                onLoad={() => console.log('Marker Loaded')}
-              />
-            )
-          })}
-        </GoogleMap>
-      </div>
+      <Footer />
     </div>
   );
 };
@@ -134,7 +147,7 @@ const PlacesAutocomplete = ({
   return (
     <div className="autocompleteWrapper">
       <fieldset>
-        <legend className="pt-4">Find a PWRmarket Near You</legend>
+        <legend className="py-5">Find a PWRmarket Near You</legend>
         <div className="flex gap-5 pb-3">
         <label className="flex cursor-pointer gap-2 text-size-4 font-bold leading-6">
           <input type="radio" name="searchMode" className="h-6 w-6 cursor-pointer accent-brand-red" value="location" checked /><span className="sr-only">Search </span>By Location
