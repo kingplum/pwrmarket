@@ -16,12 +16,14 @@ import {
   MarkerF,
   CircleF,
 } from '@react-google-maps/api';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useContext } from 'react';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
 import "../maps.css";
+import Data from './Data'
+import { useGlobalContext } from '../context/UserLocationContext';
 
 // export const metadata: Metadata = {
 //   title: 'Find A Locations | Power Market',
@@ -29,29 +31,35 @@ import "../maps.css";
 // }
 
 export default function Locations() {
-  const [lat, setLat] = useState(33.8522875);
-  const [lng, setLng] = useState(-118.4379945);
+  const [lat, setLat] = useState(16.021205);
+  const [lng, setLng] = useState(108.229936);
+  const [locationList,setLocationList]=useState(Data.CategoryListData)
+  const [selection, setSelection] = useState({});
+  const [map,setMap]=useState<any | null>(null);
+
+  const lengthList = locationList.features.length;
 
   const libraries = useMemo(() => ['places'], []);
   const mapCenter = useMemo(() => ({ lat: lat, lng: lng }), [lat, lng]);
-  const vitris = [
-    {id: 1, title: "PM #2052", lat: 33.9992401, lng: -117.6650872},
-    {id: 2, title: "PM GO #2017", lat: 34.0773157, lng: -117.6926479},
-    {id: 3, title: "PM GO #2037", lat: 33.5259669, lng: -117.7142425},
-    {id: 4, title: "PM GO #1033", lat: 33.8396226, lng: -117.8895408},
-    {id: 5, title: "PM GO #2036", lat: 33.603619, lng: -117.8754979},
-    {id: 6, title: "PM GO #2003", lat: 33.8242905, lng: -118.0304123},
-  ];
-
   const mapOptions = useMemo<google.maps.MapOptions>(
     () => ({
       disableDefaultUI: true,
       clickableIcons: true,
-      scrollwheel: false,
+      gestureHandling: "cooperative",
+      zoomControl: true,
     }),
     []
   );
 
+  useEffect(()=>{  
+    if(selection)
+    { console.log('lat' in selection); 
+    if ('lat' in selection && 'lng' in selection) {
+      map.panTo({lat: selection.lat as number, lng: selection.lng as number});
+    }
+
+    }
+  },[selection])
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyCyBQF87ZvsJgklNX4WQ4OSKuvSIlOlVMQ",
     libraries: libraries as any,
@@ -61,45 +69,94 @@ export default function Locations() {
     return <p>Loading...</p>;
   }
 
+  const scrollFunction = (index: number) => {
+    const elements = document.getElementsByClassName("store-list-card_root") as HTMLCollectionOf<HTMLElement>;
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].style.border = "1px solid rgb(217 217 214)";
+    }
+    let e = document.getElementById("card-"+index);
+    let f = document.getElementById("store-list-card_root-"+index);
+    let h = document.getElementById("store-locator_store-search-pane");
+    if(e&&f&&h){
+      let g = e.parentElement;
+      if(g){
+        var now_top = e.getBoundingClientRect().top;
+        var top = h.getBoundingClientRect().top;
+        h.scrollTo({ 
+          top: (h.scrollHeight-h.clientHeight)/(lengthList-1)*index, 
+        // left: scrolling_parent.clientWidth / 2, 
+          behavior: "smooth" 
+        }); // tr.offsetTop;
+        f.style.border = "1px solid #0063a9";
+    }}
+  }
+
+  const ensure_visible=(element_id:number) =>
+    {
+        // adjust these two to match your HTML hierarchy
+        const element_to_show  = document.getElementById('card-'+element_id);
+        if(element_to_show){
+          var scrolling_parent = element_to_show.parentElement;
+        if(scrolling_parent){
+        var top = scrolling_parent.getBoundingClientRect().top;
+        var bot = scrolling_parent.getBoundingClientRect().bottom;
+
+        var now_top = element_to_show.getBoundingClientRect().top;
+        var now_bot = element_to_show.getBoundingClientRect().bottom;
+        
+        // console.log("Element: "+now_top+";"+(now_bot)+" Viewport:"+top+";"+(bot) );
+
+        var scroll_by = 0;
+        if(now_top < top)
+            scroll_by = -(top - now_top);
+        else if(now_bot > bot)
+            scroll_by = now_bot - bot;
+        if(scroll_by != 0)
+        {
+          element_to_show.scrollTo({ 
+            top: scrolling_parent.clientHeight / 2, 
+           // left: scrolling_parent.clientWidth / 2, 
+            behavior: "smooth" 
+          }); // tr.offsetTop;
+        }
+      }}
+    }
+
   return (
-    <div className="w-screen h-screen overflow-x-hidden overflow-y-auto">
-      <Header />
-      <div className="w-full h-[500px] max-md:h-[264px] relative overflow-hidden mt-[120px] flex justify-center">
-        <div className="w-[50%] h-full max-lg:w-[40%] px-[20px] flex items-center max-md:w-full">
-          {/* render Places Auto Complete and pass custom handler which updates the state */}
-          <PlacesAutocomplete
-              onAddressSelect={(address) => {
-              getGeocode({ address: address }).then((results) => {
-                const { lat, lng } = getLatLng(results[0]);
-                setLat(lat);
-                setLng(lng);
-              });
-            }}
-          />
-        </div>  
-        <div className="w-[50%] h-full max-lg:w-[60%] flex items-center max-md:w-full">
-          <GoogleMap
-            options={mapOptions}
-            zoom={8}
-            center={mapCenter}
-            mapTypeId={google.maps.MapTypeId.ROADMAP}
-            mapContainerStyle={{ width: '100%', height: '700px' }}
-            onLoad={(map) => console.log('Map Loaded')}
-          >
-            {vitris.map(vitri => {
-              return (
-                <MarkerF
-                  key={vitri.id}
-                  position={{ lat: vitri.lat, lng: vitri.lng}}
-                  title={vitri.title}
-                  onLoad={() => console.log('Marker Loaded')}
-                />
-              )
-            })}
-          </GoogleMap>
-        </div>
+    <div className="row">
+       <div className="col-md-5 col-lg-4">
+        {/* render Places Auto Complete and pass custom handler which updates the state */}
+        <PlacesAutocomplete
+          onAddressSelect={(address) => {
+            getGeocode({ address: address }).then((results) => {
+              const { lat, lng } = getLatLng(results[0]);
+              setLat(lat);
+              setLng(lng);
+            });
+          }}
+        />
       </div>
-      <Footer />
+      <div className="col-md-7 col-lg-8 pe-0">
+        <GoogleMap
+          options={mapOptions}
+          zoom={8}
+          center={mapCenter}
+          mapTypeId={google.maps.MapTypeId.ROADMAP}
+          mapContainerStyle={{ width: '100%', height: '700px' }}
+          onLoad={(map) => console.log('Map Loaded')}
+        >
+          {vitris.map(vitri => {
+            return (
+              <MarkerF
+                key={vitri.id}
+                position={{ lat: vitri.lat, lng: vitri.lng}}
+                title={vitri.title}
+                onLoad={() => console.log('Marker Loaded')}
+              />
+            )
+          })}
+        </GoogleMap>
+      </div>
     </div>
   );
 };
@@ -116,10 +173,70 @@ const PlacesAutocomplete = ({
     setValue,
     clearSuggestions,
   } = usePlacesAutocomplete({
-    requestOptions: { componentRestrictions: { country: 'us' } },
-    debounce: 300,
-    cache: 86400,
+ 
   });
+
+  const [locationList,setLocationList]=useState(Data.CategoryListData)
+  const [radioSearch, setRadioSearch] = useState("location")
+  const [distance,setDistance]=useState<string[]>([])
+  const {userLocation,setUserLocation}=useGlobalContext()
+  const [currentLocation,setCurrentLocation]=useState({});
+  const [currentLocationLoaded, setCurrentLocationLoaded] = useState(false);
+  let arrDistance: Array<string>;
+  arrDistance = [...distance];
+  const onOptionChange = (e:React.ChangeEvent<any>) => {
+    setRadioSearch(e.target.value)
+  }
+
+  useEffect(()=>{
+    getUserLocation();
+  },[])
+  const getUserLocation=()=>{
+    navigator.geolocation.getCurrentPosition(function(pos){
+      setCurrentLocation({
+        lat:pos.coords.latitude,
+        lng:pos.coords.longitude
+      })
+      setCurrentLocationLoaded(true)
+    })
+  }
+
+  const calculateDistance = (lat1:number, lon1:number, lat2:number, lon2:number) => {
+  
+    const earthRadius = 6371; // in kilometers
+
+    const degToRad = (deg:number) => {
+      return deg * (Math.PI / 180);
+    };
+
+    const rlat1 = degToRad(lat1);
+    const rlat2 = degToRad(lat2);
+
+    const difflat = rlat2-rlat1;
+
+    const difflon = degToRad(lon2 - lon1);
+
+    const c = 2 * earthRadius * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
+
+    const distance = c;
+
+    return distance.toFixed(2); // Return the distance with 2 decimal places
+  };
+
+  useEffect(()=>{
+    if(currentLocationLoaded){
+    locationList.features.map((item,index)=>(
+      arrDistance.push(calculateDistance(
+       item.lat as number,
+       item.lng as number,
+       Object.values(currentLocation)[0]?Object.values(currentLocation)[0]:Object.values(userLocation)[0],
+       Object.values(currentLocation)[1]?Object.values(currentLocation)[1]:Object.values(userLocation)[1]
+       ))
+    ))}
+    setDistance(arrDistance) 
+
+    
+   },[currentLocationLoaded])
 
   const renderSuggestions = () => {
     return data.map((suggestion) => {
@@ -150,10 +267,12 @@ const PlacesAutocomplete = ({
         <legend className="py-5">Find a PWRmarket Near You</legend>
         <div className="flex gap-5 pb-3">
         <label className="flex cursor-pointer gap-2 text-size-4 font-bold leading-6">
-          <input type="radio" name="searchMode" className="h-6 w-6 cursor-pointer accent-brand-red" value="location" checked /><span className="sr-only">Search </span>By Location
+          <input type="radio" name="searchMode" className="h-6 w-6 cursor-pointer accent-brand-red" value="location" checked={radioSearch === "location"}
+        onChange={onOptionChange} /><span className="sr-only">Search </span>By Location
         </label>
         <label className="flex cursor-pointer gap-2 text-size-4 font-bold leading-6">
-          <input type="radio" name="searchMode" className="h-6 w-6 cursor-pointer accent-brand-red" value="storeId" /><span className="sr-only">Search </span>By Store #
+          <input type="radio" name="searchMode" className="h-6 w-6 cursor-pointer accent-brand-red" value="storeId" checked={radioSearch === "storeId"}
+        onChange={onOptionChange} /><span className="sr-only">Search </span>By Store #
         </label>
         </div>
       </fieldset>
@@ -162,12 +281,38 @@ const PlacesAutocomplete = ({
         className="autocompleteInput"
         disabled={!ready}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Enter an address, city, or zip code."
+        placeholder={radioSearch === "location"?"Enter an address, city, or zip code.":"Enter store #"}
       />
 
       {status === 'OK' && (
         <ul className="suggestionWrapper">{renderSuggestions()}</ul>
       )}
+
+      <div className='store-locator_search-pane-container'>
+        <div className='grid mg-top store-locator_store-search-pane' id='store-locator_store-search-pane'>
+          <div></div>
+          <ul className='store-locator_store-list-ul' >
+          {locationList.features.map((item,index)=>(
+            <li key={index} id={'card-'+index} className="store-locator_store-list-li">
+              <a>
+                <div className='store-list-card_root' id={'store-list-card_root-'+index}>
+                  <div className='store-list-card_content'>
+                    {item.properties.address}<br></br>
+                    {item.properties.city}<br></br>
+                    Store#{item.properties.storeId}<br></br>
+                    Dis: {distance[index]} Km
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 12" className="store-list-card_icon"><path d="M1.29.71a.996.996 0 0 0 0 1.41L5.17 6 1.29 9.88a.996.996 0 1 0 1.41 1.41L7.29 6.7a.996.996 0 0 0 0-1.41L2.7.7C2.32.32 1.68.32 1.29.71Z"></path></svg>
+                </div>
+              </a>
+            </li>
+                  
+                  
+              ))}
+          </ul>
+        </div>
+      </div>
     </div>
+  
   );
 };
